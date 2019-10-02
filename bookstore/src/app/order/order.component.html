@@ -1,0 +1,33 @@
+<mat-toolbar mat-dialog-title color="primary">
+  Order Details
+  <span class="flex-spacer"></span>
+  <button mat-button mat-dialog-close>&times;</button>
+</mat-toolbar>
+<form novalidate (ngSubmit)="sendOrder()">
+  <div fxLayout="column">
+    <h4>Book Information</h4>
+    <p>Book Name: {{book.Name}}</p>
+    <p>Price: {{book.SellingPrice}}</p>
+    <p>ISBN: {{book.ISBN}}</p>
+    <p>Store: {{book.BelongTo}}</p>
+    <mat-dialog-content>
+      <p fxLayout="row">
+        <mat-select class="half-width" placeholder="Payment Type"[(ngModel)]="method" name="method">
+          <mat-option *ngFor="let pay of paymentMethod" [value]="pay">
+            {{pay}}
+          </mat-option>
+        </mat-select>
+        <mat-select class="half-width" placeholder="Order Type"[(ngModel)]="type" name="type">
+          <mat-option *ngFor="let type of orderType" [value]="type">
+            {{type}}
+          </mat-option>
+        </mat-select>
+      </p>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <span class="flex-spacer"></span>
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button type="submit" mat-button >Order</button>
+    </mat-dialog-actions>
+  </div>
+</form>

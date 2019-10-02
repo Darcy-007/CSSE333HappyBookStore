@@ -1,0 +1,27 @@
+<div *ngIf="isLogin()" fxFlexAlign="center" fxLayoutGap="30px" layout-margin="30px">
+  <div>
+    <table>
+      <tr>
+        <th>Book Name</th>
+        <th>Store Name</th>
+        <th>Time</th>
+        <th>Payment Method</th>
+        <th>Order Type</th>
+        <th>Status</th>
+        <th *ngIf="isManager()">Customer</th>
+        <th>Option</th>
+      </tr>
+      <tr *ngFor="let order of orderList">
+        <td>{{order.BookID}}</td>
+        <td>{{order.StoreID}}</td>
+        <td>{{formatDate(order.Time)}}</td>
+        <td>{{order.PaymentMethod}}</td>
+        <td>{{order.OrderType}}</td>
+        <td>{{orderStatus[order.Status]}}</td>
+        <td *ngIf="isManager()">{{order.CustomerID}}</td>
+        <td *ngIf="isManager()"><button mat-button (click)="processOrder(order)" [disabled]="order.Status != 0">Process</button></td>
+        <td *ngIf="!isManager()"><button mat-button (click)="reviewOrder(order)" [disabled]="order.Status != 1">Review</button></td>
+      </tr>
+    </table>
+  </div>
+</div>

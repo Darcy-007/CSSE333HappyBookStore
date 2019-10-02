@@ -1,0 +1,65 @@
+<mat-toolbar mat-dialog-title color="primary">
+   Account Info
+  <span class="flex-spacer"></span>
+  <button mat-button mat-dialog-close>&times;</button>
+</mat-toolbar>
+<form [formGroup]="accountForm">
+  <mat-dialog-content>
+    <div fxLayout="column">
+      <a><p>Username : {{customer.Username}}</p></a>
+      <mat-form-field color="{{ formErrors.email ? 'warn': 'primary' }}">
+        <input matInput placeholder="email" type="email" formControlName="email" [(ngModel)]="customer.Email" required>
+        <mat-hint>
+          <span [hidden]="!(formErrors.email)">{{formErrors.email}} </span>
+        </mat-hint>
+      </mat-form-field>
+      <mat-form-field color="{{ formErrors.firstname ? 'warn': 'primary' }}">
+        <input matInput placeholder="First Name" type="text" formControlName="firstname" [(ngModel)]="customer.Firstname">
+        <mat-hint>
+          <span [hidden]="!(formErrors.firstname)">{{formErrors.firstname}} </span>
+        </mat-hint>
+      </mat-form-field>
+      <mat-form-field color="{{ formErrors.lastname ? 'warn': 'primary' }}">
+        <input matInput placeholder="Last Name" type="text" formControlName="lastname" [(ngModel)]="customer.Lastname">
+        <mat-hint>
+          <span [hidden]="!(formErrors.lastname)">{{formErrors.lastname}} </span>
+        </mat-hint>
+      </mat-form-field>
+      <mat-form-field color="{{ formErrors.phone ? 'warn': 'primary' }}">
+        <input matInput placeholder="Phone" type="number" formControlName="phone" [(ngModel)]="customer.Phone">
+        <mat-hint>
+          <span [hidden]="!(formErrors.phone)">{{formErrors.phone}} </span>
+        </mat-hint>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <span class="flex-spacer"></span>
+    <button mat-button (click)="reset()">Reset</button>
+    <button mat-button (click)="update()" [disabled]="accountForm.invalid">Update</button>
+  </mat-dialog-actions>
+</form>
+<form [formGroup]="passForm">
+  <mat-dialog-content>
+    <div fxLayout="column">
+      <h2 mat-dialog-title>Change your password</h2>
+      <mat-form-field color="{{passerror.oldpass? 'warn': 'primart'}}">
+        <input matInput placeholder="Old Password" type="password" formControlName="oldpass" required>
+        <mat-hint>
+          <span [hidden]="!(passerror.oldpass)">{{passerror.oldpass}}</span>
+        </mat-hint>
+      </mat-form-field>
+      <mat-form-field color="{{passerror.newpass? 'warn': 'primart'}}">
+        <input matInput placeholder="New Password" type="password" formControlName="newpass" required>
+        <mat-hint>
+          <span [hidden]="!(passerror.newpass)">{{passerror.newpass}}</span>
+        </mat-hint>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <span class="flex-spacer"></span>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button (click)="changePassword()" [disabled]="passForm.invalid">Submit</button>
+  </mat-dialog-actions>
+</form>

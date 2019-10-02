@@ -1,0 +1,101 @@
+<div *ngIf="isLogin()" fxFlexAlign="center" fxLayoutGap="30px" layout-margin="30px">
+  <div>
+    <form (submit)="filterBook()" [formGroup]="filterForm">
+      <div fxLayout="column">
+        <mat-dialog-content>
+          <p fxLayoutGap="30px">
+            <mat-form-field color="{{filterError.storeName ? 'warn' : 'primary'}}">
+              <input matInput placeholder="Store Name" formControlName="storeName">
+              <mat-hint>
+                <span [hidden]="!(filterError.storeName)">{{filterError.storeName}}</span>
+              </mat-hint>
+            </mat-form-field>
+            <mat-form-field color="{{filterError.bookName ? 'warn' : 'primary'}}">
+              <input matInput placeholder="Book Name" formControlName="bookName">
+              <mat-hint>
+                <span [hidden]="!(filterError.bookName)">{{filterError.bookName}}</span>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+          <span class="flex-spacer"></span>
+          <button mat-button [disabled]="filterForm.invalid" type="submit">Apply</button>
+          <button mat-button type="button" (click)="clearFilter()">Clear</button>
+        </mat-dialog-actions>
+      </div>
+    </form>
+  </div>
+  <div>
+    <mat-slide-toggle [(ngModel)]="showFavorite" (change)="getBook()">Show Favorite</mat-slide-toggle>
+    <table mat-table>
+      <tr>
+        <th>Book Name</th>
+        <th>ISBN</th>
+        <th>Selling Price</th>
+        <th>Available Store</th>
+        <th>Quantity</th>
+        <th>Rating</th>
+        <th>Option</th>
+        <th *ngIf="!isManager()">Favorite</th>
+      </tr>
+      <tr *ngFor="let book of bookList" >
+        <td (click)="selectBook(book)">{{book.Name}}</td>
+        <td>{{book.ISBN}}</td>
+        <td>{{book.SellingPrice}}</td>
+        <td>{{getBookName(book.BelongTo)}}</td>
+        <td>{{book.Quantity}}</td>
+        <td>{{book.rating}}</td>
+        <td *ngIf="isManager()"> <button mat-button type="button" (click)="deleteBook(book)">Delete</button> </td>
+        <td *ngIf="!isManager()">
+          <div>
+            <button mat-button type="button" (click)="addOrder(book)">Order</button>
+          </div>
+        </td>
+        <td *ngIf="!isManager()">
+          <mat-slide-toggle [(ngModel)]="book.favorite" (change)="onChange(book)"></mat-slide-toggle>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div  class="form-size" *ngIf="isManager()">
+    <h3>Add or Update Book</h3>
+    <form novalidate [formGroup]="bookForm" (ngSubmit)="updateBook()">
+      <p>
+        <mat-form-field class="half-width" color="{{bookError.ISBN ? 'warn':'primary'}}">
+          <input matInput placeholder="ISBN"  type="text" formControlName="ISBN" required>
+          <mat-hint>
+            <span [hidden]="!(bookError.ISBN)">{{bookError.ISBN}}</span>
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field class="half-width" color="{{bookError.Name ? 'warn':'primary'}}">
+          <input matInput placeholder="Name" type="text" formControlName="Name" required>
+          <mat-hint>
+            <span [hidden]="!(bookError.Name)">{{bookError.Name}}</span>
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field class="half-width" color="{{bookError.SellingPrice ? 'warn':'primary'}}">
+          <input matInput placeholder="Selling Price" type="text" formControlName="SellingPrice">
+          <mat-hint>
+            <span [hidden]="!(bookError.SellingPrice)">{{bookError.SellingPrice}}</span>
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field class="half-width" color="{{bookError.BelongTo ? 'warn':'primary'}}">
+          <input matInput placeholder="Available Store" type="text" formControlName="BelongTo">
+          <mat-hint>
+            <span [hidden]="!(bookError.BelongTo)">{{bookError.BelongTo}}</span>
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field class="half-width" color="{{bookError.Quantity ? 'warn':'primary'}}">
+          <input matInput placeholder="Quantity" type="number" formControlName="Quantity">
+          <mat-hint>
+            <span [hidden]="!(bookError.Quantity)">{{bookError.Quantity}}</span>
+          </mat-hint>
+        </mat-form-field>
+        <button type="submit" mat-button [disabled]="bookForm.invalid" >Update</button>
+        <button type="button" mat-button [disabled]="bookForm.invalid" (click)="addBook()">Add</button>
+        <button type="button" mat-button (click)="clear()">Clear</button>
+      </p>
+    </form>
+  </div>
+</div>

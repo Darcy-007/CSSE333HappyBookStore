@@ -1,0 +1,37 @@
+<mat-toolbar mat-dialog-title color="primary">
+  Login
+  <span class="flex-spacer"></span>
+  <button mat-button mat-dialog-close>&times;</button>
+</mat-toolbar>
+
+<form novalidate [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <p>
+      <mat-form-field class="half-width"
+                      color="{{ formErrors.username ? 'warn': 'primary' }}">
+        <input matInput placeholder="Username" type="text" formControlName="username" required>
+        <mat-hint>
+          <span [hidden]="!(formErrors.username)">{{formErrors.username}}</span>
+        </mat-hint>
+      </mat-form-field>
+      <mat-form-field color="{{ formErrors.password ? 'warn': 'primary' }}">
+        <input matInput placeholder="Password" type="password" formControlName="password" required>
+        <mat-hint>
+          <span [hidden]="!(formErrors.password)">{{formErrors.password}}</span>
+        </mat-hint>
+      </mat-form-field>
+      <mat-select placeholder="User Type" formControlName="usertype">
+        <mat-option *ngFor="let utype of userType" [value]="utype">
+          {{utype}}
+        </mat-option>
+      </mat-select>
+    </p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <span class="flex-spacer"></span>
+    <button mat-button mat-dialog-close name="newUser" (click)="newUser()">New User</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button type="submit" mat-button class="background-primary text-floral-white"
+            [disabled]="loginForm.invalid">Login</button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+  <a mat-buttom routerLink="/home"><img src="../../assets/images/head.png" height=30 width=30> </a>
+  <a mat-button routerLink="/home"><span class="fa fa-home fa-lg"></span> Home</a>
+  <a mat-button><span class="fa fa-info fa-lg"></span> About</a>
+  <a mat-button><span class="fa fa-address-card fa-lg"></span> Contact</a>
+  <span class="flex-spacer"></span>
+  <a mat-button routerLink="/book"><span class="fa fa-book fa-lg"></span> Books</a>
+  <a mat-button *ngIf="!isLogin()" (click)="openLoginForm()"><span class="fa fa-sign-in fa-lg"></span> Login</a>
+  <a mat-button [matMenuTriggerFor]="menu" *ngIf="isLogin()" ><span class="fa fa-user-circle fa-lg"> {{ getUsername()}}</span> </a>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngIf="usertype == 'Customer'" (click)="openAccountForm()"><span class="fa fa-address-book"> Account Info</span> </button>
+    <button mat-menu-item routerLink="/order"><span class="fa fa-shopping-bag"> Orders </span> </button>
+  </mat-menu>
+  <a mat-button *ngIf="isLogin()" (click)="logout()"><span class="fa fa-sign-out"> Logout</span></a>
+</mat-toolbar>
+<div class="container jumbotron"
+     fxLayout="row"
+     fxLayout.sm="column"
+     fxLayout.xs="column"
+     fxLayoutAlign.xs="start center"
+     fxLayoutAlign.sm="start center"
+     fxLayoutAlign.gt-sm="center center"
+     fxLayoutGap="10px">
+
+  <div fxFlex fxFlex.gt-sm="50%">
+
+  </div>
+  <div fxFlex fxFlex.gt-sm="20%">
+    <img src="../../assets/images/logo.png" alt="Logo" height=300 width=600>
+  </div>
+  <div fxFlex></div>
+</div>
